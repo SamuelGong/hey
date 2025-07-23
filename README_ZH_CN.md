@@ -132,7 +132,7 @@ hey "Search to learn how to locally deploy deepseek-r1:1.5b on my Macbook using 
 
 </think>
 
-你好！今天需要什么帮助吗？😊
+Hello! How can I assist you today? 😊
 ```
 
 *注：`examples/test_deepseek.py`仅用于连接ollama服务并向`deepseek-r1:7b`模型发送"Hello"进行验证*
