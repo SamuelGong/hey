@@ -1,0 +1,24 @@
+environment:
+    type: basic
+agent:
+    max_num_tasks_launched: 8
+    type: basic
+    max_workers: 4
+    task_waiting_time_in_sec: 0.1
+    task_retry_time_limit: 2
+    planner:
+        llm:
+            type: xxx
+            api_key_type: xxx
+            model_name: xxx
+            base_url: xxx
+    critic:
+        success_score_threshold:
+            code_execution: 7
+            retrieval: 5
+            read: 5
+        llm:
+            type: xxx
+            api_key_type: xxx
+            model_name: xxx
+            base_url: xxx
