@@ -175,6 +175,7 @@ cython_debug/
 
 # Customized
 .env
+config.yml
 proxy.sh
 .DS_Store
 dump.rdb
