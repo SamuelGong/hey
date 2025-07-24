@@ -120,8 +120,8 @@ I want to know lines of code in every Python file under this directory, recursiv
 ### 2.4 DeepSeek R1模型部署
 
 ```bash
-hey "Search to learn how to locally deploy deepseek-r1:1.5b on my Macbook using ollama and try to serve it in a background process so that another process can use it with Python library openai."
-# hey "研究如何通过ollama在Macbook本地部署deepseek-r1:1.5b，并设为后台进程供Python的openai库调用"
+hey "Search to learn how to locally deploy deepseek-r1:1.5b on my machine using ollama and try to serve it in a background process so that another process can use it with Python library openai."
+# hey "研究如何通过ollama在本地机器部署deepseek-r1:1.5b，并设为后台进程供Python的openai库调用"
 ```
 
 **预期结果**：

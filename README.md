@@ -113,7 +113,7 @@ I want to know lines of code in every Python file under this directory, recursiv
 ### 2.4 DeepSeek R1 Model Deployment
 
 ```bash
-hey "Search to learn how to locally deploy deepseek-r1:1.5b on my Macbook using ollama and try to serve it in a background process so that another process can use it with Python library openai."
+hey "Search to learn how to locally deploy deepseek-r1:1.5b on my machine using ollama and try to serve it in a background process so that another process can use it with Python library openai."
 ```
 
 **Expected result**:
