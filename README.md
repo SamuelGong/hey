@@ -10,6 +10,8 @@ This is a general-purpose AI agent designed for command-line usage, built from t
 with the exception of some optionally used MCP tools adapted from other open-source projects.
 t has been tested and confirmed to run on both macOS and Linux.
 
+<img width="2240" height="1648" alt="arch-chinese" src="https://github.com/SamuelGong/hey/blob/main/doc/arch-en.png" />
+
 ## 1. Preparation
 
 ### 1.1 Python Environment Setup

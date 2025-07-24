@@ -10,7 +10,7 @@
 它从零开始构建，仅部分可选的 MCP 工具是由其他开源项目的成果改造而来。
 该智能体已在 macOS 和 Linux 系统上测试通过，能够正常运行。
 
-<img width="2240" height="1648" alt="arch-chinese" src="https://github.com/SamuelGong/hey/blob/main/doc/arch-chinese.png" />
+<img width="2240" height="1648" alt="arch-chinese" src="https://github.com/SamuelGong/hey/blob/main/doc/arch-ch.png" />
 
 ## 1. 准备工作
 
