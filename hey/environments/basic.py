@@ -1,3 +1,4 @@
+import logging
 import os
 import platform
 from hey.backend.ipc.redis import RedisIPC
@@ -68,6 +69,7 @@ class AgentEnv(BasicEnv):
         )
 
         self.os_name = _get_os_name()
+        logging.info(f"Recognized OS name: {self.os_name}")
         self.working_dir = config.working_dir
         self.log_path = config.log_path
         self.config = config

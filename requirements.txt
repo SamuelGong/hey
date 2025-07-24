@@ -27,3 +27,4 @@ python-pptx
 pytesseract
 loguru
 mcp
+trio

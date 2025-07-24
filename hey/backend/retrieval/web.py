@@ -69,7 +69,7 @@ class Web:
     @staticmethod
     def fetch_page_content(url, timeout=10):
         try:
-            response = requests.get(url, timeout=timeout)
+            response = requests.get(url, timeout=timeout, verify=False)
             content_type = response.headers.get('Content-Type', '')
             if "application/pdf" in content_type:
                 logging.warning(f"Skipped fetching content online from {url} as it links to a PDF document. "
