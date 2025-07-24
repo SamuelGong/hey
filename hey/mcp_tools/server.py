@@ -40,15 +40,15 @@ def ask_user(log_path: str, question: str) -> str:
         channel=INPUT_REQUIRED,
         message={'prompt': question, 'target_pid': my_pid}
     )
-    logging.info(f"[ASK USER] Published the prompt: {question}")
+    logging.info(f"Published the prompt: {question}")
     user_answer = agent_env.get_data_from_main_process(
         target_pid=my_pid,
         blocked=True
     )
-    logging.info(f"[ASK USER] Got the user input: {user_answer}")
+
+    user_answer = f"Got the user input: {user_answer}"
+    logging.info(user_answer)
     return user_answer
-
-
 
 
 @mcp.tool()

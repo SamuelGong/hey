@@ -34,6 +34,7 @@ Friendly note: 1. To analyze the content of online resources, e.g., videos, plea
 and then read out their content explicitly before finally attempting to analyze the content.
 2. When downloading files are required, you need to explicitly specify their paths and names to facilitate cross-subtask processing.
 3. When downloading Youtube videos with Python code, use `import yt_dlp as youtube_dl` instead of `import youtube_dl` to avoid error `Unable to extract uploader id`.
+4. If only a single subtask using the `ask_user` tool is generated, you should prepend a placeholder subtask that depends on it. This ensures that if the ask_user result indicates the workflow should be extended to better address the user's needs, the placeholder can be automatically updated by a later planner. (Don't worry about the placeholder’s initial structure—it will be refined as needed.)
 """,
 
     'plan_user_query':

@@ -1,13 +1,10 @@
 import os
 import asyncio
 import logging
-from datetime import timedelta
 from contextlib import AsyncExitStack
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
-
-from anthropic import Anthropic
 
 
 class MCPClient:
@@ -15,7 +12,6 @@ class MCPClient:
         # Initialize session and client objects
         self.session = None
         self.exit_stack = AsyncExitStack()
-        self.anthropic = Anthropic()
         self.log_path = log_path
         # self._server_process = None
 

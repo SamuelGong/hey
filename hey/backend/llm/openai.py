@@ -1,3 +1,13 @@
+# Address the RuntimeWarning (which is brought by the use of `httpx`):
+#
+# You seem to already have a custom sys.excepthook handler installed.
+# I'll skip installing Trio's custom handler, but this means MultiErrors will not show full tracebacks.
+import sys
+orig_hook = sys.excepthook          # save PyCharm/IPython hook
+sys.excepthook = sys.__excepthook__ # restore default
+import trio                          # Trio installs its hook
+sys.excepthook = orig_hook          # put yours back
+
 import os
 import httpx
 import hashlib
