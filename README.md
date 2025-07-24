@@ -14,7 +14,7 @@ t has been tested and confirmed to run on both macOS and Linux.
 
 ### 1.1 Python Environment Setup
 ```bash
-conda create -n hey code=3.10 -y
+conda create -n hey python=3.10 -y
 conda activate hey
 pip install -e .
 ```
