@@ -179,3 +179,4 @@ proxy.sh
 .DS_Store
 dump.rdb
 nohup.out
+**/*.log
