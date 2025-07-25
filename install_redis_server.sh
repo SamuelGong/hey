@@ -26,7 +26,7 @@ elif [[ -r /etc/os-release ]]; then
     has_like() {
         local needle="${1,,}"             # argument lowercased
         local id_lc="${ID,,}"             # ID lowercased
-        local like_lc="${ID_LIKE,,}"      # ID_LIKE lowercased (may be empty)
+        local like_lc="${ID_LIKE:-}"      # ID_LIKE lowercased (may be empty)
         [[ "$id_lc" == "$needle" ]] && return 0
         [[ "$like_lc" == *"$needle"* ]] && return 0
         return 1
