@@ -24,8 +24,11 @@ elif [[ -r /etc/os-release ]]; then
 
     # Helper: return 0 if $1 is contained in $ID or $ID_LIKE
     has_like() {
-        [[ "$ID" == "$1" ]] && return 0
-        [[ "${ID_LIKE:-}" == *"$1"* ]] && return 0
+        local needle="${1,,}"             # argument lowercased
+        local id_lc="${ID,,}"             # ID lowercased
+        local like_lc="${ID_LIKE,,}"      # ID_LIKE lowercased (may be empty)
+        [[ "$id_lc" == "$needle" ]] && return 0
+        [[ "$like_lc" == *"$needle"* ]] && return 0
         return 1
     }
 
@@ -34,8 +37,8 @@ elif [[ -r /etc/os-release ]]; then
         sudo apt-get update
         sudo apt-get install -y redis-server
 
-    elif has_like rhel || has_like centos || has_like fedora; then
-        # RHEL/CentOS/AlmaLinux/Rocky/Fedora/OpenEuler
+    elif has_like rhel || has_like centos || has_like fedora || has_like openeuler; then
+        # RHEL/CentOS/AlmaLinux/Rocky/Fedora/openEuler
         PKG_MGR=""
         if command -v dnf >/dev/null 2>&1; then
             PKG_MGR="dnf"
