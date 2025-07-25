@@ -29,36 +29,15 @@ python -m ipykernel install --user
 
 ### 1.2 IPC Solution
 
-Run Redis server in the background (for Inter-Process Communication) using:
+Install and run Redis server in the background (for Inter-Process Communication) using:
 
 ```bash
-# With root privileges
 bash install_redis_server.sh
 nohup redis-server &
-
-# Alternative without root access:
-# cd ..  # or elsewhere you want
-# wget https://download.redis.io/releases/redis-7.0.15.tar.gz
-# tar -xf redis-7.0.15.tar.gz
-# cd redis-7.0.15
-# make
-# cd src
-# ./redis-server &
-#
-# Reference: https://techmonger.github.io/40/redis-without-root/
 ```
 
-[//]: # (### 1.3 MCP Server)
+In case you do not have root privileges, you can follow this [instruction](install_redis_server.md) to work around the problem.
 
-[//]: # ()
-[//]: # (Run the native MCP server in the background &#40;for built-in tools functionality&#41;:)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (nohup python hey/mcp_tools/server.py &)
-
-[//]: # (```)
 
 ### 1.3 Configuration
 

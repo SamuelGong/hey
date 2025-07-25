@@ -28,34 +28,14 @@ python -m ipykernel install --user
 
 ### 1.2 进程间通信方案
 
-后台运行Redis服务器（用于进程间通信）：
+安装并后台运行Redis服务器（用于进程间通信）：
 ```bash
-# 拥有root权限时
 bash install_redis_server.sh
 nohup redis-server &
-
-# 无root权限替代方案：
-# cd ..  # 或任意目标目录
-# wget https://download.redis.io/releases/redis-7.0.15.tar.gz
-# tar -xf redis-7.0.15.tar.gz
-# cd redis-7.0.15
-# make
-# cd src
-# ./redis-server &
-#
-# 参考：https://techmonger.github.io/40/redis-without-root/
 ```
 
-[//]: # (### 1.3 MCP服务器部署)
+如果你没有root权限，可以参照这里的[说明](install_redis_server.md)进行安装。
 
-[//]: # ()
-[//]: # (后台运行原生MCP服务器（使智能体能够使用内置工具）：)
-
-[//]: # (```bash)
-
-[//]: # (nohup python hey/mcp_tools/native/server.py &)
-
-[//]: # (```)
 
 ### 1.3 配置文件
 
