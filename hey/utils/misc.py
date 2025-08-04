@@ -141,38 +141,67 @@ def sanitize_json(text):
     return ''.join(out)
 
 
-def extract_json_from_string(original_text):
-    text = sanitize_json(original_text)
-    # logging.info(f"[DEBUG] Sanitized text:\n{text}")
+def _find_balanced_region(s: str, start: int):
+    """Return (lo, hi) for the balanced JSON region starting at start, or None."""
+    pair = {'{': '}', '[': ']'}
+    opener = s[start]
+    if opener not in pair:
+        return None
+    closer = pair[opener]
+    stack = [closer]
+    i = start + 1
+    n = len(s)
+    while i < n:
+        ch = s[i]
+        # IMPORTANT: do NOT try to track quotes here (pre-sanitization may be invalid).
+        if ch in pair:                 # new nested object/array
+            stack.append(pair[ch])
+        elif ch in (']', '}'):         # possible close
+            if not stack or ch != stack[-1]:
+                return None            # mismatched -> not a valid JSON region
+            stack.pop()
+            if not stack:
+                return (start, i + 1)  # inclusive end
+        i += 1
+    return None                        # ran out before closing
 
-    # json_regex = r'```json\n\s*\{\n\s*[\s\S\n]*\}\n\s*```'
-    json_regex = r'```json\n\s*(\{[\s\S]*\}|\[[\s\S]*\])\n\s*```'
-    matches = re.findall(json_regex, text)
-    if matches:
-        json_data = matches[0].replace('```json', '').replace('```', '').strip()
+
+def _json_candidates(s: str):
+    """Yield (lo, hi) spans for candidate JSON blocks in s."""
+    pos = 0
+    n = len(s)
+    while pos < n:
+        # next opening brace/bracket
+        i1 = s.find('{', pos)
+        i2 = s.find('[', pos)
+        if i1 == -1 and i2 == -1:
+            break
+        start = i1 if i2 == -1 else (i2 if i1 == -1 else min(i1, i2))
+        reg = _find_balanced_region(s, start)
+        if reg:
+            yield reg
+        pos = start + 1
+
+
+def extract_json_from_string(original_text: str):
+    """
+    1) Search raw text for the first balanced {...} or [...]
+    2) Run sanitize_json on that candidate
+    3) Try json.loads; if it fails, try the next candidate
+    """
+    text = original_text
+
+    for lo, hi in _json_candidates(text):
+        candidate = text[lo:hi]
+        cleaned = sanitize_json(candidate)
         try:
-            # Parse the JSON data
-            parsed_json = json.loads(json_data)
-            return parsed_json
+            return json.loads(cleaned)
         except json.JSONDecodeError as e:
-            logging.error(f"Error parsing JSON data (case 1): {e}. "
-                          f"Original text:\n{original_text}\n\nSanitized text:\n{text}")
-    else:
-        json_regex = r'\s*(\{[\s\S]*\}|\[[\s\S]*\])\s*'
-        matches = re.findall(json_regex, text)
-        if matches:
-            json_data = matches[0].replace('```json', '').replace('```', '').strip()
-            try:
-                # Parse the JSON data
-                parsed_json = json.loads(json_data)
-                return parsed_json
-            except json.JSONDecodeError as e:
-                logging.error(f"Error parsing JSON data (case 2): {e}. "
-                              f"Original text:\n{original_text}\n\nSanitized text:\n{text}")
-        else:
-            logging.error(f"No JSON data found. "
-                          f"Original text:\n{original_text}\n\nSanitized text:\n{text}")
+            logging.debug(f"Candidate at {lo}:{hi} failed JSON parse: {e}")
 
+    # 3C) if we still failed…
+    logging.error(f"No JSON data found. "
+                  f"Original text:\n{original_text}")
     return {}
 
 
