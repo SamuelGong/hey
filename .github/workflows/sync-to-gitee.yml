@@ -1,0 +1,29 @@
+name: Mirror to Gitee
+
+on:
+  push:             # run every time you push anything to GitHub
+    branches: [ main ]     # or whatever your canonical branch is
+  workflow_dispatch:       # plus a manual “Run workflow” button
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4        # brings the whole repo into $GITHUB_WORKSPACE
+        with:
+          fetch-depth: 0                 # grab full history so tags & branches mirror cleanly
+
+      - name: Push to Gitee
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          git config --global user.email "bot@users.noreply.github.com"
+          git config --global user.name  "GitHub Action"
+          
+          # add (or replace) the Gitee remote – HTTPS with token auth
+          git remote add gitee https://${GITEE_TOKEN}@gitee.com/openeuler/hey.git \
+            || git remote set-url gitee https://${GITEE_TOKEN}@gitee.com/openeuler/hey.git
+
+          # tells Git to write the local main branch to the remote master branch
+          git push gitee main:master --follow-tags
