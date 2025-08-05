@@ -2,28 +2,19 @@ name: Mirror to Gitee
 
 on:
   push:             # run every time you push anything to GitHub
-    branches: [ main ]     # or whatever your canonical branch is
+    branches: [ master ]     # or whatever your canonical branch is
   workflow_dispatch:       # plus a manual “Run workflow” button
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4        # brings the whole repo into $GITHUB_WORKSPACE
-        with:
-          fetch-depth: 0                 # grab full history so tags & branches mirror cleanly
-
-      - name: Push to Gitee
-        env:
-          GITEE_USER:  ${{ secrets.GITEE_USER }}   # e.g. your Gitee login or 'oauth2'
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}  # PAT with repo scope
-        run: |
-          git config --global user.email "bot@users.noreply.github.com"
-          git config --global user.name  "GitHub Action"
-
-          URL="https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/openeuler/hey.git"
-          git remote add gitee "$URL" || git remote set-url gitee "$URL"
-
-          # main (GitHub) → master (Gitee)
-          git push gitee main:master --follow-tags --force   # drop --force if you don’t intend to overwrite
+    - name: Hub Mirror Action.
+      uses: Yikun/hub-mirror-action@v1.5
+      with:
+        src: github/SamuelGong/hey      # where the code comes from
+        dst: gitee/openeuler/hey        # where it goes
+        dst_token:  ${{ secrets.GITEE_TOKEN }}    # or dst_key for SSH
+        force_update: true                        # overwrite if histories diverge
+        debug: true                               # verbose logs (optional)
+        lfs: true 
