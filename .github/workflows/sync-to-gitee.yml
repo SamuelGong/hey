@@ -16,14 +16,14 @@ jobs:
 
       - name: Push to Gitee
         env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          GITEE_USER:  ${{ secrets.GITEE_USER }}   # e.g. your Gitee login or 'oauth2'
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}  # PAT with repo scope
         run: |
           git config --global user.email "bot@users.noreply.github.com"
           git config --global user.name  "GitHub Action"
-          
-          # add (or replace) the Gitee remote – HTTPS with token auth
-          git remote add gitee https://${GITEE_TOKEN}@gitee.com/openeuler/hey.git \
-            || git remote set-url gitee https://${GITEE_TOKEN}@gitee.com/openeuler/hey.git
 
-          # tells Git to write the local main branch to the remote master branch
-          git push gitee main:master --follow-tags
+          URL="https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/openeuler/hey.git"
+          git remote add gitee "$URL" || git remote set-url gitee "$URL"
+
+          # main (GitHub) → master (Gitee)
+          git push gitee main:master --follow-tags --force   # drop --force if you don’t intend to overwrite
